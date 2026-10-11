@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#101321">
+  <title>SprintDesk — задачи команды</title>
+  <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+  <div id="auth-view" class="auth-shell">
+    <div class="auth-brand">
+      <span class="brand-emblem" aria-hidden="true">◈</span>
+      <span>Sprint<span class="brand-bold">Desk</span></span>
+    </div>
+    <div class="auth-card">
+      <div class="auth-icon">✦</div>
+      <p class="eyebrow">ОРГАНИЗУЙТЕ РАБОТУ ЛЕГКО</p>
+      <h1>Ваша команда.<br><span>Ваш ритм.</span></h1>
+      <p class="auth-subtitle">Одно пространство для идей, планов и выполненных задач.</p>
+      <div class="auth-tabs" role="tablist">
+        <button id="tab-login" class="active" type="button">Войти</button>
+        <button id="tab-register" type="button">Регистрация</button>
+      </div>
+      <form id="auth-form">
+        <label id="name-field" class="field hidden"><span>Ваше имя</span><input id="auth-name" type="text" minlength="2" maxlength="80" autocomplete="name" placeholder="Александр" /></label>
+        <label class="field"><span>Электронная почта</span><input id="auth-email" type="email" autocomplete="email" placeholder="name@example.com" required /></label>
+        <label class="field"><span>Пароль</span><input id="auth-password" type="password" minlength="8" autocomplete="current-password" placeholder="Минимум 8 символов" required /></label>
+        <button id="auth-submit" class="button button-primary auth-submit" type="submit">Войти в пространство <span>↗</span></button>
+      </form>
+      <p class="auth-footer">Фокус на важном. Всё остальное — под контролем.</p>
+    </div>
+    <div class="auth-decoration"><div class="orbit orbit-one"></div><div class="orbit orbit-two"></div><span>MAKE<br>PROGRESS.</span></div>
+  </div>
+
+  <div id="app-view" class="app-shell hidden">
+    <aside class="sidebar">
+      <div class="logo"><span class="brand-emblem">◈</span> Sprint<span class="brand-bold">Desk</span></div>
+      <div class="sidebar-label">РАБОЧЕЕ ПРОСТРАНСТВО</div>
+      <div class="nav-item selected"><span class="nav-icon">▦</span> Моя доска <span class="nav-arrow">↗</span></div>
+      <div class="sidebar-section"><span class="sidebar-label">НАВИГАЦИЯ</span><a class="nav-item" href="/api/docs" target="_blank" rel="noopener"><span class="nav-icon">⌘</span> API документация <span class="nav-arrow">↗</span></a></div>
+      <div class="sidebar-bottom"><div class="profile-avatar" id="side-avatar">У</div><div class="profile-copy"><strong id="side-name">Участник</strong><small id="side-role">Участник</small></div><button id="logout" type="button" title="Выйти" class="icon-button">⎋</button></div>
+    </aside>
+
+    <main class="workspace">
+      <header class="topbar"><div class="breadcrumb">Рабочее пространство <span>/</span> <strong>Доска задач</strong></div><div class="topbar-right"><span class="topbar-dot"></span> Всё в ваших руках <span id="top-avatar" class="tiny-avatar">У</span></div></header>
+      <section class="content">
+        <div class="heading-block"><div><div class="eyebrow accent-eyebrow"><span class="accent-dot"></span> УПРАВЛЕНИЕ ПРОЕКТОМ</div><h1>Доска задач<span class="period">.</span></h1><p class="headline-sub">Двигайтесь вперёд, шаг за шагом.</p></div><button id="new-task" class="button button-primary new-button" type="button"><span>＋</span> Новая задача</button></div>
+        <section class="stats" aria-label="Статистика"><div class="stat-card"><div class="stat-head">Всего задач <span>▦</span></div><strong id="stat-total">0</strong><small>В вашем пространстве</small></div><div class="stat-card"><div class="stat-head">В работе <span>◷</span></div><strong id="stat-progress">0</strong><small>На пути к результату</small></div><div class="stat-card"><div class="stat-head">Завершено <span>✓</span></div><strong id="stat-done">0</strong><small>Маленькие победы</small></div><div class="stat-card stat-accent"><div class="stat-head">Прогресс <span>↗</span></div><strong id="stat-percent">0%</strong><div class="progress-track"><div id="progress-fill"></div></div></div></section>
+        <section class="board-header"><div><h2>Обзор задач <span id="task-counter" class="count-badge">0</span></h2><p>Все задачи, идеи и планы в одном месте.</p></div><div class="filter-controls"><label class="search-wrap"><span>⌕</span><input id="search" placeholder="Поиск задачи..." aria-label="Поиск задачи"></label><select id="priority-filter" aria-label="Фильтр по приоритету"><option value="all">Все приоритеты</option><option value="3">Высокий</option><option value="2">Средний</option><option value="1">Низкий</option></select></div></section>
+        <section class="kanban" aria-label="Доска задач"><div class="column"><div class="column-title"><span class="status-circle gray"></span><strong>К выполнению</strong><span id="count-todo" class="column-count">0</span></div><div id="column-todo" class="task-list"></div></div><div class="column"><div class="column-title"><span class="status-circle purple"></span><strong>В процессе</strong><span id="count-in_progress" class="column-count">0</span></div><div id="column-in_progress" class="task-list"></div></div><div class="column"><div class="column-title"><span class="status-circle green"></span><strong>Готово</strong><span id="count-done" class="column-count">0</span></div><div id="column-done" class="task-list"></div></div></section>
+      </section>
+    </main>
+  </div>
+
+  <dialog id="task-modal" class="task-modal"><form id="task-form"><div class="modal-top"><div><p class="eyebrow accent-eyebrow">УПРАВЛЕНИЕ ЗАДАЧАМИ</p><h2 id="modal-title">Новая задача</h2></div><button type="button" id="close-modal" class="icon-button" aria-label="Закрыть">✕</button></div><label class="field"><span>Название задачи</span><input id="task-title" maxlength="120" minlength="2" placeholder="Например, подготовить дизайн" required></label><label class="field"><span>Описание</span><textarea id="task-description" maxlength="2000" rows="4" placeholder="Что нужно сделать?"></textarea></label><div class="modal-grid"><label class="field"><span>Статус</span><select id="task-status"><option value="todo">К выполнению</option><option value="in_progress">В процессе</option><option value="done">Готово</option></select></label><label class="field"><span>Приоритет</span><select id="task-priority"><option value="1">Низкий</option><option value="2" selected>Средний</option><option value="3">Высокий</option></select></label></div><label id="owner-field" class="field hidden"><span>Исполнитель</span><select id="task-owner"></select></label><div class="modal-actions"><button type="button" id="delete-task" class="button button-danger hidden">Удалить</button><span class="flex-spacer"></span><button type="button" id="cancel-modal" class="button button-secondary">Отмена</button><button id="save-task" type="submit" class="button button-primary">Сохранить →</button></div></form></dialog>
+  <div id="toast" role="status" aria-live="polite"></div>
+  <script src="/static/app.js" defer></script>
+</body>
+</html>
